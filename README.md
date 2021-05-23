@@ -1,5 +1,5 @@
 libraries used:
-configfile2 (developed by Guillaume Chayé)
+configfile2 (developed by nebuloss)
 SDL2
 SDL2_ttf
 
