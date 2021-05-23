@@ -1,7 +1,7 @@
 libraries used:
 ---------------
-configfile2 (developed by nebuloss)
-SDL2
+configfile2 (developed by nebuloss), 
+SDL2, 
 SDL2_ttf
 
 
@@ -9,16 +9,16 @@ dependencies:
 -------------
 
 __debian:__
-libsdl2-dev
+libsdl2-dev, 
 libsdl2-ttf-dev
 
 __arch:__
-sdl2
+sdl2, 
 sdl2-ttf
 
 __windows:__
-mingw64
-sdl2
+mingw64, 
+sdl2, 
 sdl2-ttf
 
 
