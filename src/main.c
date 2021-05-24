@@ -108,8 +108,9 @@ int main(int argc,char* argv[]){
     SDL_SetWindowPosition(window2,100,50);
     SDL_SetWindowIcon(window2,main_config->icon);
     
-    
-    while (WelcomeMenu(renderer1,main_config)){ //while we do not quit the welcome menu
+    WelcomeMenu(renderer1,main_config);
+
+    while (WaitKeyEvent()){ //while we do not quit the welcome menu
         SDL_HideWindow(window1); //switch window
         SDL_ShowWindow(window2);
 

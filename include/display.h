@@ -50,6 +50,6 @@ extern bool CharacterSearchTresure(SDL_Renderer* renderer,map_package* mp,charac
 extern bool WaitKeyEvent();
 
 //menu d'acceuil
-extern bool WelcomeMenu(SDL_Renderer* renderer,mainconf* cf);
+extern void WelcomeMenu(SDL_Renderer* renderer,mainconf* cf);
 
 #endif
