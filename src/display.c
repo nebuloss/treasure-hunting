@@ -304,7 +304,7 @@ bool CharacterSearchTresure(SDL_Renderer* renderer,map_package* mp,character_pat
 
 }
 
-void WelcomeMenu(SDL_Renderer* renderer,mainconf* cf){ //menu démarrer
+bool WelcomeMenu(SDL_Renderer* renderer,mainconf* cf){ //menu démarrer
     SDL_Rect r = {0,0,640,400};
     coords t = {400,0};
     coords T = {0,370};
@@ -321,4 +321,5 @@ void WelcomeMenu(SDL_Renderer* renderer,mainconf* cf){ //menu démarrer
     WriteText(cf->default_font,colors.white,T,renderer,"Appuyez sur entrer pour continuer ou echap pour quitter"); 
 
     SDL_RenderPresent(renderer);
+    return WaitKeyEvent();
 }
