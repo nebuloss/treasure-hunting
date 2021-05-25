@@ -80,7 +80,7 @@ map_path* AStar(map_grid* m,uint32_t x_start,uint32_t y_start,uint32_t x_end,uin
     grid_case * start_case, *end_case, *current, *c, *min,*buff;
     dpa *O;
     map_path* path;
-    uint32_t g,h,value,min_value,f,path_lenght,total_lenght;
+    uint32_t g,h,min_value,f,path_lenght,total_lenght;
     uint16_t current_lenght;
     int32_t gap,width,x,y;
     void ** min_adress, **temp_end,*ptr;
@@ -111,12 +111,10 @@ map_path* AStar(map_grid* m,uint32_t x_start,uint32_t y_start,uint32_t x_end,uin
     
     do{
         current->is_close=true; //le current marquer comme etant visité
-        value=current->value; //la valeur est egale a la valeur du current
+        g=current->value+current->g; //la valeur est egale a la valeur du current
         for(int i=0;i<8;i++){ //On visite les voisins
             c=current+relative_adress[i];
             if(c->value && c->is_close==false){ // si la casse est franchissage et qu'elle n'est pas dans close
-                g = current->g+value;//on calcule le g cost de la case
-
                 if (c->is_marked==false){  // si noeud non marque
                     c->parent=i; // lie a un parent
                     c->is_marked=true; //les noeuds sont marquer comme etant parcourue
