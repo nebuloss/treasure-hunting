@@ -146,7 +146,7 @@ map_package* MenuAskForPositions(SDL_Renderer* renderer,map_objects* mo,mainconf
     map_package* mp=calloc(1,sizeof(map_package));
     coords current_pos,*lc=mp->pos.pos,separation={0,80};
 
-    grid_case** arr=(&mo->mg)->map;
+    grid_case **arr=(&mo->mg)->map,*current_case;
 
     SDL_Surface *map=mo->map;
     SDL_Texture *map_text=mp->map=SDL_CreateTextureFromSurface(renderer,map); //on initialise les textures à afficher 
@@ -166,22 +166,25 @@ map_package* MenuAskForPositions(SDL_Renderer* renderer,map_objects* mo,mainconf
         FillRect(&mp->text_rect,colors.white,renderer); 
         WriteText(cf->title_font,colors.black,NULL_COORDS,renderer,messages[i]); //affiche un message 
         
+        do{
+            current_pos=SelectLocation(renderer,map_text,separation,valid_text,invalid_text,&mo->mg); //on sélectionne la position
+            
+            if (current_pos.x==-1){ //en cas d'abandon
+                FreeMapPackage(mp);
+                SDL_DestroyTexture(valid_text);
+                SDL_DestroyTexture(invalid_text);
+                return NULL;
+            }
 
-        current_pos=SelectLocation(renderer,map_text,separation,valid_text,invalid_text,&mo->mg); //on sélectionne la position
+            c.x=current_pos.x<<5; 
+            c.y=current_pos.y<<5;
+            current_pos.x++;
+            current_pos.y++;
+            current_case=arr[current_pos.y]+current_pos.x;
+        }while(!current_case->value);
         
-        if (current_pos.x==-1){ //en cas d'abandon
-            FreeMapPackage(mp);
-            SDL_DestroyTexture(valid_text);
-            SDL_DestroyTexture(invalid_text);
-            return NULL;
-        }
-
-        c.x=current_pos.x<<5; 
-        c.y=current_pos.y<<5;
-        current_pos.x++;
-        current_pos.y++;
         lc[i]=current_pos; //ajoute la position sélectionnée dans la structure
-        arr[current_pos.y][current_pos.x].value=0; //on ne peut pas sélectionner deux fois le même emplacement
+        current_case->value=0; //on ne peut pas sélectionner deux fois le même emplacement
         
         SDL_UpdateTexture(map_text,&c,chest->pixels,chest->pitch);
 
