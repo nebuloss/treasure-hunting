@@ -170,6 +170,12 @@ map_package* MenuAskForPositions(SDL_Renderer* renderer,map_objects* mo,mainconf
             current_pos=SelectLocation(renderer,map_text,separation,valid_text,invalid_text,&mo->mg); //on sélectionne la position
             
             if (current_pos.x==-1){ //en cas d'abandon
+                for (int j=0;j<i;j++){ //on remet les case choisis à un état qui peut être parcouru
+                    arr[lc[j].y][lc[j].x].value=2; 
+                    lc[j].x--;
+                    lc[j].y--;
+                }
+
                 FreeMapPackage(mp);
                 SDL_DestroyTexture(valid_text);
                 SDL_DestroyTexture(invalid_text);
@@ -182,7 +188,7 @@ map_package* MenuAskForPositions(SDL_Renderer* renderer,map_objects* mo,mainconf
             current_pos.y++;
             current_case=arr[current_pos.y]+current_pos.x;
         }while(!current_case->value);
-        
+
         lc[i]=current_pos; //ajoute la position sélectionnée dans la structure
         current_case->value=0; //on ne peut pas sélectionner deux fois le même emplacement
         
@@ -200,6 +206,12 @@ map_package* MenuAskForPositions(SDL_Renderer* renderer,map_objects* mo,mainconf
 
     SDL_DestroyTexture(valid_text); 
     SDL_DestroyTexture(invalid_text);
+
+    for (int i=0;i<NB_CHESTS;i++){ //on remet les case choisis à un état qui peut être parcouru
+        arr[lc[i].y][lc[i].x].value=2; 
+        lc[i].x--;
+        lc[i].y--;
+    }
     
     if (current_pos.x==-1){ //abandon lors de la dernière sélection
         FreeMapPackage(mp);
@@ -208,12 +220,7 @@ map_package* MenuAskForPositions(SDL_Renderer* renderer,map_objects* mo,mainconf
 
     mp->tresure=mo->tresure; //initialise les valeurs du map_package
     mp->void_chest=mo->void_chest;
-
-    for (int i=0;i<NB_CHESTS;i++){ //on remet les case choisis à un état qui peut être parcouru
-        arr[lc[i].y][lc[i].x].value=3; 
-        lc[i].x--;
-        lc[i].y--;
-    }
+    
     lc[NB_CHESTS].x=current_pos.x; //position du coffre
     lc[NB_CHESTS].y=current_pos.y;
     mp->pos.tresure=0; //le trésor est la première position
