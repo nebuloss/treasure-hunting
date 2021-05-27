@@ -23,7 +23,7 @@ typedef struct{ //struct pour les information du chemin
 typedef struct grid_case grid_case;
 
 struct grid_case{ //struct pour les informations liée a la case de la grille
-    uint32_t f,g;
+    uint16_t f,g;
     uint8_t value,parent;
     bool is_marked,is_close; 
 };

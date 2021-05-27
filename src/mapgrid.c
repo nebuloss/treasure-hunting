@@ -80,8 +80,7 @@ map_path* AStar(map_grid* m,uint32_t x_start,uint32_t y_start,uint32_t x_end,uin
     grid_case * start_case, *end_case, *current, *c, *min,*buff;
     dpa *O;
     map_path* path;
-    uint32_t g,h,min_value,f,path_lenght,total_lenght;
-    uint16_t current_lenght;
+    uint16_t g,h,min_value,f,path_lenght;
     int32_t gap,width,x,y;
     void ** min_adress, **temp_end,*ptr;
 
@@ -169,7 +168,6 @@ map_path* AStar(map_grid* m,uint32_t x_start,uint32_t y_start,uint32_t x_end,uin
     //derniere etape reconstituer le chemin ( le chemin retourner est une liste dans le sens inverse. on parcoura la liste dans le sens inverse pour afficher le chemin.)
     if (!(path=malloc(sizeof(map_path)+sizeof(map_direction)*path_lenght))) return NULL; //on alloue le nécessaire pour path
 
-    total_lenght=0; // init de la longueur total a 0
     for(h=0;current!=start_case;h++){    // temps que h different de start_case alors on aggremente 
         if (h==path_lenght){ // pour reallouer plus de case dans path si on arrive a la limite
             path_lenght<<=1; // path*2
@@ -182,14 +180,11 @@ map_path* AStar(map_grid* m,uint32_t x_start,uint32_t y_start,uint32_t x_end,uin
         gap=current->parent; //on recupere le parents
         x=relative_x[gap]+1; //on prepare empaquetage pour les directions
         y=relative_y[gap]+1;
-        current= current-relative_adress[gap]; // on trouve l'adresse du parents
-        current_lenght=current->value;
-        total_lenght+=current_lenght; //incrémente total_lenght avec le poids du chemin actuel
-        
-        path->path[h]=(x<<2)|y|(current_lenght<<4);// on stock la direction, le poids de la direction   
+        current= current-relative_adress[gap]; // on trouve l'adresse du parents   
+        path->path[h]=(x<<2)|y|(current->value<<4);// on stock la direction, le poids de la direction   
     }
     path->lenght=h;
-    path->total_lenght=total_lenght;
+    path->total_lenght=end_case->g;
     return path;// on retourne Path
 }
 
