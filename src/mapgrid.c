@@ -261,10 +261,10 @@ character_path* EvaluateCharacterPath(map_position* m,map_grid* mg){ //Pour savo
             
             ResetMapGrid(mg); //on reset les valeurs de la grille de la map
             current_path=AStar(mg,current.x,current.y,pts[j].x,pts[j].y); //on calcul le chemin entre le point actuel et un autre point a partir de la fonction Astar
-             
-            if (!current_path) continue; // si le chemin calculé est NULL on retourne a la boucle while
-            
+
+            if (!current_path) continue; // si le chemin calculé est NULL on retourne a la boucle while        
             current_lenght=current_path->total_lenght; //current_lenght est egale a la longueurs total
+
             if(min_path==NULL){ //s'il n'y a pas de min on considere le chemin calculé précédemment comme etant le plus petit
                 min_path=current_path; 
                 min_lenght=current_lenght;
@@ -273,6 +273,7 @@ character_path* EvaluateCharacterPath(map_position* m,map_grid* mg){ //Pour savo
                 free(min_path); // on libere le chemin pris auparavant 
                 k=j;
                 min_path=current_path; // on le considere comme le nouveau min_path
+                min_lenght=current_lenght;
             }
             else free(current_path); //si autre on libere le chemin précédemment calculer
         }
