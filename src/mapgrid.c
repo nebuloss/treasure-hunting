@@ -177,11 +177,11 @@ map_path* AStar(map_grid* m,uint32_t x_start,uint32_t y_start,uint32_t x_end,uin
             } // retourne un chemin NULL
             path=ptr;
         }
-        gap=current->parent; //on recupere le parents
-        x=relative_x[gap]+1; //on prepare empaquetage pour les directions
+        gap=current->parent; 
+        x=relative_x[gap]+1;
         y=relative_y[gap]+1;
-        current= current-relative_adress[gap]; // on trouve l'adresse du parents   
-        path->path[h]=(x<<2)|y|(current->value<<4);// on stock la direction, le poids de la direction   
+        current= current-relative_adress[gap]; 
+        path->path[h]=(x<<2)|y|(current->value<<4);
     }
     path->lenght=h;
     path->total_lenght=end_case->g;

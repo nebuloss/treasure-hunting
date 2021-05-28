@@ -161,7 +161,10 @@ map_objects* LoadObjects(mainconf* cf){
             SDL_BlitSurface(ti->surface,NULL,s,&r); //copie la surface de la texture dans la grande surface de la map
             c->value=ti->lenght;
         }
-        else LogWrite(logfile,LOG_WARNING,"Texture id %u missing for coordinates x=%u y=%u",value,r.x,r.y); //en cas de texture non trouvée
+        else{
+            LogWrite(logfile,LOG_WARNING,"Texture id %u missing for coordinates x=%u y=%u",value,r.x,r.y); //en cas de texture non trouvée
+            c->value=0;
+        }
         arrcpy++;
         c++;
         r.x+=TEXTURE_WIDTH;

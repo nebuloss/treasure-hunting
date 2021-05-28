@@ -142,6 +142,7 @@ void FreeMapPackage(map_package* mp){
 map_package* MenuAskForPositions(SDL_Renderer* renderer,map_objects* mo,mainconf* cf){
     //liste des messages à afficher à l'écran
     char* messages[]={"Veuillez placer le tresor","Placez un second coffre...","Placez un troisieme coffre...","Placez un dernier coffre"};
+    uint8_t save_value[NB_CHESTS];
 
     map_package* mp=calloc(1,sizeof(map_package));
     coords current_pos,*lc=mp->pos.pos,separation={0,80};
@@ -171,7 +172,7 @@ map_package* MenuAskForPositions(SDL_Renderer* renderer,map_objects* mo,mainconf
             
             if (current_pos.x==-1){ //en cas d'abandon
                 for (int j=0;j<i;j++){ //on remet les case choisis à un état qui peut être parcouru
-                    arr[lc[j].y][lc[j].x].value=2; 
+                    arr[lc[j].y][lc[j].x].value=save_value[j]; 
                     lc[j].x--;
                     lc[j].y--;
                 }
@@ -190,6 +191,7 @@ map_package* MenuAskForPositions(SDL_Renderer* renderer,map_objects* mo,mainconf
         }while(!current_case->value);
 
         lc[i]=current_pos; //ajoute la position sélectionnée dans la structure
+        save_value[i]=current_case->value;
         current_case->value=0; //on ne peut pas sélectionner deux fois le même emplacement
         
         SDL_UpdateTexture(map_text,&c,chest->pixels,chest->pitch);
@@ -208,7 +210,7 @@ map_package* MenuAskForPositions(SDL_Renderer* renderer,map_objects* mo,mainconf
     SDL_DestroyTexture(invalid_text);
 
     for (int i=0;i<NB_CHESTS;i++){ //on remet les case choisis à un état qui peut être parcouru
-        arr[lc[i].y][lc[i].x].value=2; 
+        arr[lc[i].y][lc[i].x].value=save_value[i]; 
         lc[i].x--;
         lc[i].y--;
     }
