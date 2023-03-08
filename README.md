@@ -1,3 +1,5 @@
+![1234](screenshot.png)Z
+
 libraries used:
 ---------------
 configfile2 (developed by nebuloss), 
@@ -14,7 +16,7 @@ libsdl2-ttf-dev
 
 __arch:__
 sdl2, 
-sdl2-ttf
+sdl2_ttf
 
 __windows:__
 mingw64, 
